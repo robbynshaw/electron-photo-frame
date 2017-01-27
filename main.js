@@ -1,3 +1,7 @@
+// TODO Hardcoded options
+const userID = '105272298552335144033'
+const interval = 5 * 60 * 1000
+
 const electron = require('electron')
 // Module to control application life.
 const app = electron.app
@@ -9,7 +13,7 @@ const url = require('url')
 const util = require('./lib/util.js')()
 
 // Photo APIs
-const googlePhotos = require('./lib/googlephoto.js')()
+const googlePhotos = require('./lib/googlephoto.js')(userID)
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -18,8 +22,8 @@ let mainWindow
 function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 400,
-    height: 400,
+    width: 359,
+    height: 268,
     autoHideMenuBar: true
   })
 
@@ -38,11 +42,11 @@ function createWindow () {
         var url = photoCol[i].src;
         setTimeout(function(uri){
             mainWindow.loadURL(uri)
-        }, i * 30000, url)
+        }, i * interval, url)
       }
       setTimeout(function(){
         googlePhotos.fetchPhotos()
-      }, (photoCol.length + 1) * 30000)
+      }, (photoCol.length + 1) * interval)
     }
   })
   googlePhotos.fetchPhotos()
